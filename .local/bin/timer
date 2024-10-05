@@ -1,0 +1,3 @@
+#!/bin/bash
+
+qtile cmd-obj -o screen -o bar bottom -o widget timer -f timer_start -a $1
