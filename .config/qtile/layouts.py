@@ -1,50 +1,11 @@
 from libqtile import layout
 from libqtile.backend.base import Window
-from libqtile.config import ScreenRect, Bar
+from libqtile.config import ScreenRect
 from libqtile.log_utils import logger
 
 import math
 
-from color import window_border
-
-
-class BetterBsp(layout.Bsp):
-    def __init__(self, **config):
-        super().__init__(**config)
-        self.add_defaults([("inner_margin", 0)])
-
-    def configure(self, client: Window, screen_rect: ScreenRect) -> None:
-        self.root.calc_geom(screen_rect.x, screen_rect.y, screen_rect.width, screen_rect.height)
-        node = self.get_node(client)
-        color = self.border_focus if client.has_focus else self.border_normal
-        border = 0 if node is self.root and not self.border_on_single else self.border_width
-        margin = self.margin_on_single if node is self.root else self.margin
-        if type(margin) is not list:
-            margin = [margin, margin, margin, margin]
-        else:
-            margin = margin.copy()
-        if node is not None:
-            bar_top: Bar = self.group.screen.top
-
-            if node.y != bar_top.height:  # not north
-                margin[0] = self.inner_margin
-            if node.x + node.w != screen_rect.width:  # not east
-                margin[1] = self.inner_margin
-            if node.y + node.h != screen_rect.height + bar_top.height:  # not south
-                margin[2] = self.inner_margin
-            if node.x != 0:  # not west
-                margin[3] = self.inner_margin
-
-            client.place(
-                node.x,
-                node.y,
-                node.w - 2 * border,
-                node.h - 2 * border,
-                border,
-                color,
-                margin=margin,
-            )
-        client.unhide()
+from color import window_border, window_border_fixed
 
 
 class GridSelect(layout.Matrix):
@@ -88,14 +49,12 @@ class GridSelect(layout.Matrix):
 
 
 layouts = [
-    BetterBsp(
-        margin=[0, 26, 0, 26],
-        inner_margin=13,
-        wrap_clients=True,
-        **window_border
+    layout.Plasma(
+        margin=[10, 20, 10, 20],
+        **window_border,
+        **window_border_fixed
     ),
     layout.Max(
-        margin=[0, 26, 0, 26],
-        **window_border
-    )
+        margin=[10, 20, 10, 20],
+    ),
 ]

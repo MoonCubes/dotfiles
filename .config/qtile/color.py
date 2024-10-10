@@ -10,3 +10,8 @@ window_border = dict(
     border_focus=colors[2],
     border_normal="303030"
 )
+
+window_border_fixed = dict(
+    border_focus_fixed=colors[2],
+    border_normal_fixed="303030"
+)

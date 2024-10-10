@@ -90,7 +90,7 @@ bring_front_click = True
 floats_kept_above = True
 cursor_warp = False
 floating_layout = layout.Floating(
-    border_width=2,
+    border_width=1,
     **window_border,
     float_rules=[
         *layout.Floating.default_float_rules,

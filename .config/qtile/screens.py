@@ -43,7 +43,7 @@ class BetterNvidiaSensors(widget.NvidiaSensors):
             "",
             "GPU's Bus ID, ex: ``01:00.0``. If leave empty will display all " "available GPU's",
         ),
-        ("update_interval", 2, "Update interval in seconds."),
+        ("update_interval", 5, "Update interval in seconds."),
         (
             "threshold",
             70,
@@ -81,11 +81,11 @@ class SmartExit(widget.WidgetBox):
                 ("confirm_text", "Confirm", "The text displayed after being pressed."),
                 ("decorations", [
                     widget.decorations.RectDecoration(
-                        radius=9,
+                        radius=5,
                         line_colour=colors[0],
                         line_width=1,
                         padding_y=3,
-                        colour="55555589",
+                        colour="66666689",
                         filled=True
                     )
                 ])
@@ -274,6 +274,7 @@ class DynamicTaskList(widget.TaskList):
         # Obey max_title_width if specified
         if self.max_title_width:
             width_boxes = [min(w, self.max_title_width) for w in width_boxes]
+        width_boxes[-1] += 1
 
         return zip(windows, icons, names, width_boxes)
 
@@ -306,11 +307,11 @@ def tasklist_parse_text(text):
 decoration = dict(
     decorations=[
         widget.decorations.RectDecoration(
-            radius=9,
+            radius=5,
             line_colour=colors[0],
             line_width=1,
             padding_y=3,
-            colour="55555589",
+            colour="66666689",
             filled=True
         )
     ],
@@ -380,7 +381,6 @@ screens = [
                     ]
                 ),
                 widget.Spacer(),
-                widget.Notify(fmt="<span weight='bold'>{}</span>"),
                 Timer(fmt="<span weight='bold'>{}</span>"),
                 widget.Spacer(10),
                 widget.Systray(),
@@ -401,10 +401,12 @@ screens = [
                 widget.Spacer(1),
                 widget.Spacer(),
                 DynamicTaskList(
+                    highlight_method="block",
                     parse_text=tasklist_parse_text,
                     stretch=False,
-                    background=colors[0],
-                    border=colors[2],
+                    background="00000066",
+                    border="66666669",
+                    rounded=True
                 ),
                 widget.Spacer(),
                 widget.Spacer(1),

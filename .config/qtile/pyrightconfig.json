@@ -1,0 +1,6 @@
+{
+  "extraPaths": [
+    "/home/ole/.local/pipx/venvs/qtile/lib/python3.11/site-packages"
+  ],
+  "rootDir": "."
+}
