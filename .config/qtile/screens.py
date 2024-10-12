@@ -4,6 +4,7 @@ from libqtile.command.base import expose_command
 from libqtile.config import Screen
 from libqtile.utils import send_notification
 from libqtile.log_utils import logger
+from libqtile.scratchpad import ScratchPad
 
 import qtile_extras.widget as widget
 
@@ -17,8 +18,19 @@ from color import colors
 def window_count():
     windows = 0
     for i in qtile.groups:
+        if type(i) is ScratchPad:
+            continue
         windows += len(i.windows)
     return windows
+
+
+class LazyFunctions(widget.Spacer):
+    start_size: tuple[int, int] = (0, 0)
+
+    @expose_command()
+    def get_window_size(self) -> tuple[int, int]:
+        self.start_size = qtile.current_window.get_size()
+        return self.start_size
 
 
 class BetterNvidiaSensors(widget.NvidiaSensors):
@@ -57,6 +69,15 @@ class BetterNvidiaSensors(widget.NvidiaSensors):
         self.add_defaults(BetterNvidiaSensors.defaults)
         self.foreground_normal = self.foreground
         self.format = self.format_normal
+
+        self.add_callbacks(
+            {
+                "Button1": self.open_settings
+            }
+        )
+
+    def open_settings(self):
+        qtile.spawn("nvidia-settings")
 
     def mouse_enter(self, *args, **kwargs):
         self.format = self.format_hovered
@@ -386,6 +407,7 @@ screens = [
                 widget.Systray(),
                 widget.Spacer(10),
                 widget.Volume(
+                    volume_app="pavucontrol",
                     fmt="🔉 {}",
                     **decoration
                 ),
@@ -398,7 +420,7 @@ screens = [
         ),
         bottom=bar.Bar(
             [
-                widget.Spacer(1),
+                LazyFunctions(1),
                 widget.Spacer(),
                 DynamicTaskList(
                     highlight_method="block",
@@ -416,5 +438,5 @@ screens = [
         ),
         wallpaper="/home/ole/.local/share/backgrounds/unsplash/johannes-plenio-hvrpOmuMrAI-unsplash.jpg",
         wallpaper_mode="fill",
-        x11_drag_polling_rate=60
+        x11_drag_polling_rate=75
     )]

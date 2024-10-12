@@ -74,8 +74,21 @@ def resize(qtile, x, y):
     layout = qtile.current_layout
     windows = list(filter(lambda e: not e.floating, layout.group.windows))
     if layout.name == "plasma" and not qtile.current_window.floating and len(windows) > 1:
-        layout.focused_node.width = x
-        layout.focused_node.height = y
+        start_size = qtile.current_group.screen.bottom.widgets[0].start_size
+        mouse_pos: tuple[int, int] = qtile.core.get_mouse_position()
+
+        middle_x: int = int(layout.focused_node.x + (layout.focused_node.width / 2))
+        middle_y: int = int(layout.focused_node.y + (layout.focused_node.height / 2))
+
+        if middle_x <= mouse_pos[0]:
+            layout.focused_node.width = x
+        else:
+            layout.focused_node.width = start_size[0] * 2 - x
+
+        if middle_y <= mouse_pos[1]:
+            layout.focused_node.height = y
+        else:
+            layout.focused_node.height = start_size[1] * 2 - y
 
         layout.layout(windows, layout.group.screen.get_rect())
 
@@ -85,6 +98,6 @@ def resize(qtile, x, y):
 # Drag floating layouts.
 mouse = [
     Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
-    Drag([mod], "Button3", resize(), start=lazy.window.get_size()),
+    Drag([mod], "Button3", resize(), start=lazy.bar["bottom"].widget["lazyfunctions"].get_window_size()),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]

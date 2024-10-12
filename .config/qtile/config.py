@@ -69,7 +69,7 @@ def check_brave(client: Window):
     return " - Brave" in client.name and "brave-browser-beta" not in client.get_wm_class()
 
 
-def focus_behavior(client: Window):
+def focus_behavior(client: Window) -> bool:
     focus: bool = (
         "firefox" in client.get_wm_class()
         or "brave-browser-beta" in client.get_wm_class()
@@ -105,7 +105,7 @@ floating_layout = layout.Floating(
             Match(wm_class="steam"),
             InvertMatch(Match(title="Steam"))
         ),
-        Match(func=check_brave)
+        Match(func=check_brave),
     ]
 )
 auto_fullscreen = True
