@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+
+import dbus
+import sys
+
+def toggle_play_pause():
+    bus = dbus.SessionBus()
+    # Find all services that start with 'org.mpris.MediaPlayer2.'
+    for service in bus.list_names():
+        if service.startswith('org.mpris.MediaPlayer2.'):
+            player = bus.get_object(service, '/org/mpris/MediaPlayer2')
+            interface = dbus.Interface(player, dbus_interface='org.mpris.MediaPlayer2.Player')
+            # Get the current playback status
+            status = player.Get('org.mpris.MediaPlayer2.Player', 'PlaybackStatus', dbus_interface='org.freedesktop.DBus.Properties')
+            # Toggle play/pause based on the current status
+            if status == 'Playing':
+                interface.Pause()
+                print(f'Paused: {service}')
+            elif status == 'Paused':
+                interface.Play()
+                print(f'Resumed: {service}')
+            else:
+                print(f'No action taken for {service} with status: {status}')
+            # Exit after handling the first available media player
+            return
+
+    print('No media players found')
+    sys.exit(1)
+
+if __name__ == "__main__":
+    toggle_play_pause()
+

@@ -15,7 +15,7 @@ keys = [
     Key([mod], "p", lazy.spawn("xset dpms force off"), desc="Turn the screen black"),
     Key([], "Print", lazy.spawn("flameshot gui"), desc="Take a screenshot"),
     Key(["control"], "Print", lazy.spawn("flameshot full"), desc="Take a screenshot of the whole screen"),
-    Key([mod], "Pause", lazy.spawn("toggle_media"), desc="Pause or play media"),
+    Key([mod], "Pause", lazy.spawn("toggle-media"), desc="Pause or play media"),
 
     Key([mod], "Tab", lazy.group.next_window(), desc="Move window focus to next window"),
     Key([mod], "grave", lazy.spawn("rofi -modi window,windowcd -show window"), desc="Move focus using rofi"),
