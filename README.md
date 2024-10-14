@@ -1,7 +1,7 @@
 ![](./preview.png)
 
 # My dotfiles
-This repository contains some of my configurations files.
+This repository contains some of my configurations files.  
     - [Qtile](https://qtile.org)  
     - [Picom](https://github.com/yshui/picom)  
     - [Rofi](https://davatorium.github.io/rofi/)  
