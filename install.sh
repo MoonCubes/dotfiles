@@ -16,3 +16,6 @@ cp ./.local/bin/is-media-playing ~/.local/bin/
 cp ./.local/bin/timer ~/.local/bin/
 cp ./.local/bin/toggle-media ~/.local/bin/
 
+cp ./.local/bin/nvidia-settings ~/.local/bin/
+cp ./.local/bin/pavucontrol ~/.local/bin/
+

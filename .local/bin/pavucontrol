@@ -1,0 +1,2 @@
+#!/bin/sh
+qtile cmd-obj -o group scratchpad -f dropdown_toggle -a "Pavucontrol"
