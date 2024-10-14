@@ -15,6 +15,7 @@ keys = [
     Key([mod], "p", lazy.spawn("xset dpms force off"), desc="Turn the screen black"),
     Key([], "Print", lazy.spawn("flameshot gui"), desc="Take a screenshot"),
     Key(["control"], "Print", lazy.spawn("flameshot full"), desc="Take a screenshot of the whole screen"),
+    Key([mod], "Pause", lazy.spawn("toggle_media"), desc="Pause or play media"),
 
     Key([mod], "Tab", lazy.group.next_window(), desc="Move window focus to next window"),
     Key([mod], "grave", lazy.spawn("rofi -modi window,windowcd -show window"), desc="Move focus using rofi"),
@@ -108,7 +109,7 @@ def resize(qtile, x, y):
 
 # Drag floating layouts.
 mouse = [
-    Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
+    Drag([mod], "Button1", lazy.window.set_position(), start=lazy.window.get_position()),
     Drag([mod], "Button3", resize(), start=get_size()),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
