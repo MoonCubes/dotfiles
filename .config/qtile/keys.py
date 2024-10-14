@@ -55,6 +55,7 @@ keys = [
 
     Key([mod], "x", lazy.spawn(terminal), desc="Launch terminal"),
     Key([mod], "space", lazy.next_layout(), desc="Toggle between layouts"),
+
     Key(
         [mod],
         "f",
@@ -62,6 +63,8 @@ keys = [
         desc="Toggle fullscreen on the focused window",
     ),
     Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
+    Key([mod], "m", lazy.window.toggle_maximize(), desc="Toggle maximized on the focused window"),
+
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "shift"], "r", lazy.spawn("rofi -show run"), desc="Spawn a command using rofi"),
     Key([mod], "r", lazy.spawn("rofi -show drun"), desc="Spawn an application using rofi"),
@@ -69,12 +72,20 @@ keys = [
 ]
 
 
+start_size: tuple[int, int] = (0, 0)
+
+@lazy.function
+def get_size(qtile):
+    global start_size
+    start_size = qtile.current_window.get_size()
+    return start_size
+
+
 @lazy.function
 def resize(qtile, x, y):
     layout = qtile.current_layout
     windows = list(filter(lambda e: not e.floating, layout.group.windows))
     if layout.name == "plasma" and not qtile.current_window.floating and len(windows) > 1:
-        start_size = qtile.current_group.screen.bottom.widgets[0].start_size
         mouse_pos: tuple[int, int] = qtile.core.get_mouse_position()
 
         middle_x: int = int(layout.focused_node.x + (layout.focused_node.width / 2))
@@ -98,6 +109,7 @@ def resize(qtile, x, y):
 # Drag floating layouts.
 mouse = [
     Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
-    Drag([mod], "Button3", resize(), start=lazy.bar["bottom"].widget["lazyfunctions"].get_window_size()),
+    Drag([mod], "Button3", resize(), start=get_size()),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
+

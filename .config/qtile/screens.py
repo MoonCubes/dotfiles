@@ -24,15 +24,6 @@ def window_count():
     return windows
 
 
-class LazyFunctions(widget.Spacer):
-    start_size: tuple[int, int] = (0, 0)
-
-    @expose_command()
-    def get_window_size(self) -> tuple[int, int]:
-        self.start_size = qtile.current_window.get_size()
-        return self.start_size
-
-
 class BetterNvidiaSensors(widget.NvidiaSensors):
     defaults = [
         (
@@ -420,7 +411,7 @@ screens = [
         ),
         bottom=bar.Bar(
             [
-                LazyFunctions(1),
+                widget.Spacer(1),
                 widget.Spacer(),
                 DynamicTaskList(
                     highlight_method="block",

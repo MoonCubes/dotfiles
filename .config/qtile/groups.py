@@ -7,6 +7,7 @@ groups = [
     Group(
         "1",
         label="⬤",
+        spawn="sensible-browser"
     ),
     Group(
         "2",

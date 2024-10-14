@@ -33,8 +33,8 @@ from libqtile.utils import send_notification
 
 from color import window_border
 from screens import screens, widget_defaults, extension_defaults
-from groups import groups
-from keys import mod, keys, mouse
+from keys import mod, mouse
+from groups import groups, keys
 from layouts import layouts
 
 
@@ -42,7 +42,7 @@ from layouts import layouts
 def autorun():
     qtile.spawn("lxpolkit")
     qtile.spawn("betterlock-wrapper --setup")
-    qtile.spawn("picom --daemon --experimental-backends")
+    qtile.spawn("picom --daemon")
     qtile.spawn("steam -silent")
     qtile.spawn("heroic --no-gui")
     qtile.spawn("lutris")
