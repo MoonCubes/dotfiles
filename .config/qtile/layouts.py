@@ -48,8 +48,22 @@ class GridSelect(layout.Matrix):
         client.unhide()
 
 
+class Plasma(layout.Plasma):
+    def swap(self, c1: Window, c2: Window) -> None:
+        node_c1 = node_c2 = None
+        for leaf in self.root.all_leafs:
+            if leaf.payload is not None:
+                if c1.wid == leaf.payload.wid:
+                    node_c1 = leaf
+                elif c2.wid == leaf.payload.wid:
+                    node_c2 = leaf
+            if node_c1 is not None and node_c2 is not None:
+                node_c1.payload, node_c2.payload = node_c2.payload, node_c1.payload
+                return
+
+
 layouts = [
-    layout.Plasma(
+    Plasma(
         margin=[10, 20, 10, 20],
         **window_border,
         **window_border_fixed

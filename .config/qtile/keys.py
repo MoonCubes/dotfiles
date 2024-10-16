@@ -67,7 +67,7 @@ keys = [
     Key([mod], "m", lazy.window.toggle_maximize(), desc="Toggle maximized on the focused window"),
 
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
-    Key([mod, "shift"], "r", lazy.spawn("rofi -show run"), desc="Spawn a command using rofi"),
+    Key([mod, "shift"], "r", lazy.spawn("rofi -show run -no-show-icons -disable-history"), desc="Spawn a command using rofi"),
     Key([mod], "r", lazy.spawn("rofi -show drun"), desc="Spawn an application using rofi"),
     Key([alt], "f4", lazy.window.kill(), desc="Kill focused window.")
 ]

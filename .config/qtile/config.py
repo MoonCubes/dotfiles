@@ -43,7 +43,7 @@ def autorun():
     qtile.spawn("lxpolkit")
     qtile.spawn("betterlock-wrapper --setup")
     qtile.spawn("picom --daemon")
-    qtile.spawn("steam -silent")
+    qtile.spawn("steam")
     qtile.spawn("heroic --no-gui")
     qtile.spawn("lutris")
     qtile.spawn("discord --start-minimized")
